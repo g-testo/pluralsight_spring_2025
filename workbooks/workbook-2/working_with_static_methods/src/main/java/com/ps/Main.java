@@ -14,30 +14,41 @@ public class Main {
 //        float subResult1 = sub(10, 5);
 //        System.out.println(subResult1);
 
-        scannerAdd();
-        scannerSub();
+//        scannerAdd();
+//        scannerSub();
+//
+//        String word = "word";
 
-        String word = "word";
+        // matching return type, name of the variable, assigning, method name to call, passing arguments
+        String fullName = nancysMethod("Nancy", "Bishwakarma");
+
+        System.out.println(fullName);
+
     }
 
-    public static void scannerAdd(){
-        System.out.print("Number 1: ");
-        float num1 = scanner.nextFloat();
-
-        System.out.print("Number 2: ");
-        float num2 = scanner.nextFloat();
-
-        System.out.println(num1 + num2);
+    // Access specifier, static modifier, return type, name of method, parameters
+    public static String nancysMethod(String firstName, String lastName) {
+        return "Welcome " + firstName + " " + lastName + "!";
     }
-    public static void scannerSub(){
-        System.out.print("Number 1: ");
-        float num1 = scanner.nextFloat();
 
-        System.out.print("Number 2: ");
-        float num2 = scanner.nextFloat();
-
-        System.out.println(num1 - num2);
-    }
+//    public static void scannerAdd(){
+//        System.out.print("Number 1: ");
+//        float num1 = scanner.nextFloat();
+//
+//        System.out.print("Number 2: ");
+//        float num2 = scanner.nextFloat();
+//
+//        System.out.println(num1 + num2);
+//    }
+//    public static void scannerSub(){
+//        System.out.print("Number 1: ");
+//        float num1 = scanner.nextFloat();
+//
+//        System.out.print("Number 2: ");
+//        float num2 = scanner.nextFloat();
+//
+//        System.out.println(num1 - num2);
+//    }
 
 //    public static float add(float num1, float num2 /* Parameters */ ){
 //        return num1 + num2;
