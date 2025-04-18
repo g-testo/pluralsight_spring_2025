@@ -2,17 +2,22 @@ package com.ps;
 
 public class Main {
     public static void main(String[] args) {
-        String phrase1 = "Early bird gets the worm";
-        String phrase2 = "Measure twice cut once";
-        String phrase3 = "Lefty loosie righty tighty";
-        // Methods
-        // generates a random phrase
-        // display the phrase
+//       String myPhrase = Phrases.phrase1;
+//        Phrases.printPhrase(myPhrase);
+
+        // Constructor Method
+        // Capitalized
+        // The name of the method is the same name as the class
+        // Is no return type
+        Student student1 = new Student(593785, "Syed", 4.0F);
+        Student student2 = new Student(2432434, "Sheik", 3.9F);
+
+        Student student3 = new Student();
 
 
-        String animal1 = "Monkey";
-        String animal2 = "Goat";
-        String animal3 = "Lion";
-        //
+        System.out.println(student2.getCurrentGrade());
+
+
+
     }
 }
