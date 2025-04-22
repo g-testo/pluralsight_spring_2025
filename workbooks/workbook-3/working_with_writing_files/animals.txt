@@ -1,0 +1,7 @@
+1|Kangaroo
+2|Lion
+3|Monkey
+4|Lemur
+5|Raccoon
+6|Fox
+7|Falcon
