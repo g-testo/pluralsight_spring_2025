@@ -2,7 +2,7 @@ package com.ps;
 
 import java.util.Scanner;
 
-public class Main {
+public class SimpleMenu {
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         int mainMenuCommand;
