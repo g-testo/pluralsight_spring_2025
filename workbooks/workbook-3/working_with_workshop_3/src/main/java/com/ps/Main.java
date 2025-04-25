@@ -130,6 +130,7 @@ public class Main {
 
     private static void findProductByName() {
         System.out.print("Please provide a product name: ");
+        scanner.nextLine();
         String productNameInput = scanner.nextLine();
 
         for(Product product: inventory){
@@ -144,6 +145,7 @@ public class Main {
 
     private static void filterByDepartment() {
         System.out.println("Please provide a department: ");
+        scanner.nextLine();
         String departmentInput = scanner.nextLine();
 
         for(Product product: inventory){
@@ -155,6 +157,18 @@ public class Main {
     }
 
     private static void addProduct() {
+        System.out.print("Please provide a product name: ");
+        String productNameInput = scanner.nextLine();
+
+        for(Product product: inventory){
+            String currentProductName = product.getProductName();
+            if(currentProductName.equalsIgnoreCase(productNameInput)){
+                cart.add(product);
+                System.out.println("Product successfully added");
+                break;
+            }
+        }
+        System.out.println("Product not found");
     }
 
     private static void displayCart() {
@@ -180,8 +194,22 @@ public class Main {
     }
 
     private static void handleCheckout() {
+        for(Product product: cart){
+            System.out.println(product);
+        }
     }
 
     private static void removeProduct() {
+        System.out.print("Please provide a product name: ");
+        String productNameInput = scanner.nextLine();
+
+        for(Product product: inventory){
+            String currentProductName = product.getProductName();
+            if(currentProductName.equalsIgnoreCase(productNameInput)){
+                cart.remove(product);
+                break;
+            }
+        }
+        System.out.println("Product not found");
     }
 }
