@@ -24,6 +24,8 @@ public class Main {
             System.out.print("What would you like to do? ");
             mainMenuCommand = scanner.nextInt();
 
+//            TODO: Testing todo 1
+
             switch (mainMenuCommand) {
                 case 1:
                     displayProducts();
@@ -36,6 +38,9 @@ public class Main {
                     break;
                 default:
                     System.out.println("Command not found! Try again");
+
+                    //            TODO: Testing todo 2
+
             }
 
         } while (mainMenuCommand != 0);
@@ -197,6 +202,7 @@ public class Main {
         for(Product product: cart){
             System.out.println(product);
         }
+//            \b TODO: Testing todo 3
     }
 
     private static void removeProduct() {
