@@ -1,5 +1,10 @@
 package com.ps;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Employee {
     private long employeeId;
     private String name;
@@ -7,6 +12,8 @@ public class Employee {
     private double payRate;
     private double hoursWorked;
     private double lastCheckedInTime;
+
+    public Employee(){}
 
     public Employee(long employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -74,11 +81,33 @@ public class Employee {
         }
     }
 
-    private void punchIn(double time){
+    public void punchIn(double time){
         this.lastCheckedInTime = time;
     }
 
-    private void punchOut(double time){ // 20 hour 8 hour
+    public void punchIn(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+
+        // LocalTime.now()
+        // 2200
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        String formatedCurrentTime = formatter.format(currentTime);
+
+        this.lastCheckedInTime = Double.parseDouble(formatedCurrentTime);
+    }
+
+    public void punchOut(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalDateTime currentTime = LocalDateTime.now();
+        String formatedCurrentTime = formatter.format(currentTime);
+        double punchOutTime = Double.parseDouble(formatedCurrentTime);
+
+        this.hoursWorked += punchOutTime - this.lastCheckedInTime;
+    }
+
+
+    public void punchOut(double time){ // 20 hour 8 hour
         double timeWorked = time - this.lastCheckedInTime;
 
         this.hoursWorked += timeWorked;
