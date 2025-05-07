@@ -1,8 +1,8 @@
 package com.ps;
 
 public class MyCounter {
-    private static int counterStatic;
-    private int counterInstance;
+    private static int counterStatic = 0;
+    private int counterInstance = 0;
 
     public static void incrementStatic(){
         counterStatic++;
