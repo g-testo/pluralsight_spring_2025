@@ -9,7 +9,7 @@ public class MyCounter {
     }
 
     public void incrementInstance(){
-        counterInstance++;
+        this.counterInstance++;
     }
 
     public static int getCounterStatic(){
@@ -17,6 +17,6 @@ public class MyCounter {
     }
 
     public int getCounterInstance(){
-        return counterInstance;
+        return this.counterInstance;
     }
 }
