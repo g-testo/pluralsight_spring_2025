@@ -47,7 +47,7 @@ public class Main {
 //        System.out.println(currentCountMyCounter3);
 
 
-       String result = NameHelper.formatName("Greg", "David", "Testo");
+//       String result = NameHelper.formatName("Greg", "David", "Testo");
         // Testo, Greg D
 
     }
