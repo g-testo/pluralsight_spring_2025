@@ -25,11 +25,11 @@ public class Deck {
     }
 
     public Card deal(){
-        return null;
+        return cards.remove(cards.size() - 1);
     }
 
     public int getSize(){
-        return 0;
+        return cards.size();
     }
 
 }
