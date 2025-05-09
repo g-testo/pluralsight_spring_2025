@@ -50,4 +50,11 @@ public class Card {
         return this.isFaceUp;
     }
 
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit='" + suit + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }
