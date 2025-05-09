@@ -1,13 +1,14 @@
 package com.ps;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
-    private Dealership dealership = new Dealership();
+    private Dealership dealership;
     private Scanner scanner = new Scanner(System.in);
 
     private void init(){
-        // TODO: Load dealership details from a file
+        dealership = DealershipFileManager.getDealership();
     }
 
     public UserInterface(){
@@ -74,7 +75,9 @@ public class UserInterface {
 
 
     private void processGetByPriceRequest(){
-
+        // TODO: Ask the user for a starting price and ending price
+        // ArrayList<Vehicle> filteredVehicles = dealership.getVehiclesByPrice(startingPrice, endingPrice);
+        // Display vehicles with for loop
     }
     private void processGetByMakeModelRequest(){
 
