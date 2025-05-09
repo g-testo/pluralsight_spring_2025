@@ -95,6 +95,11 @@ public class UserInterface {
 
     }
     private void processGetAllVehiclesRequest(){
+        ArrayList<Vehicle> vehicles = dealership.getAllVehicles();
+        System.out.println("---------Printing all vehicles-----------");
+        for(Vehicle vehicle: vehicles){
+            System.out.print(vehicle);
+        }
 
     }
     private void processAddVehicleRequest(){
