@@ -76,8 +76,18 @@ public class UserInterface {
 
     private void processGetByPriceRequest(){
         // TODO: Ask the user for a starting price and ending price
+        System.out.println("--------Display vehicles by price--------");
+        System.out.print("Min: ");
+        double min = scanner.nextDouble();
+
+        System.out.print("Max: ");
+        double max = scanner.nextDouble();
+
         // ArrayList<Vehicle> filteredVehicles = dealership.getVehiclesByPrice(startingPrice, endingPrice);
+        ArrayList<Vehicle> filteredVehicles = dealership.vehiclesByPrice(min, max);
+
         // Display vehicles with for loop
+        displayVehicles(filteredVehicles);
     }
     private void processGetByMakeModelRequest(){
 
@@ -97,16 +107,19 @@ public class UserInterface {
     private void processGetAllVehiclesRequest(){
         ArrayList<Vehicle> vehicles = dealership.getAllVehicles();
         System.out.println("---------Printing all vehicles-----------");
-        for(Vehicle vehicle: vehicles){
-            System.out.print(vehicle);
-        }
-
+        displayVehicles(vehicles);
     }
     private void processAddVehicleRequest(){
 
     }
     private void processRemoveVehicleRequest(){
 
+    }
+
+    public static void displayVehicles(ArrayList<Vehicle> vehicles){
+        for(Vehicle vehicle: vehicles){
+            System.out.print(vehicle);
+        }
     }
 
 }
