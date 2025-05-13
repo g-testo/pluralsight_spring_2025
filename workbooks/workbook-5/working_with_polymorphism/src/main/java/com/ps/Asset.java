@@ -5,6 +5,12 @@ public class Asset {
     private String dateAcquired;
     private double originalCost;
 
+    public Asset(){}
+
+    public Asset(double originalCost){
+        this.originalCost = originalCost;
+    }
+
     public Asset(String description, String dateAcquired, double originalCost) {
         this.description = description;
         this.dateAcquired = dateAcquired;

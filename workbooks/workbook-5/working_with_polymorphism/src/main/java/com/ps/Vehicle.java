@@ -7,6 +7,13 @@ public class Vehicle extends Asset{
     private int year;
     private int odometer;
 
+    public Vehicle(double originalCost, String makeModel, int year, int odometer) {
+        super(originalCost);
+        this.makeModel = makeModel;
+        this.year = year;
+        this.odometer = odometer;
+    }
+
     public Vehicle(String description, String dateAcquired, double originalCost, String makeModel, int year, int odometer) {
         super(description, dateAcquired, originalCost);
         this.makeModel = makeModel;
@@ -16,33 +23,37 @@ public class Vehicle extends Asset{
 
     @Override
     public double getValue(){
-        int vehicleAge = Year.now().getValue() - this.year;
+        int vehicleAge = getVehicleAge();
         double vehicleValue;
 
         if(vehicleAge  <= 3){
-            vehicleValue = calculateVehicleValue(.03, vehicleAge);
+            vehicleValue = calculateVehicleValue(.03);
         } else if(vehicleAge <= 6){
-            vehicleValue = calculateVehicleValue(.06, vehicleAge);
+            vehicleValue = calculateVehicleValue(.06);
         } else if (vehicleAge <= 10) {
-            vehicleValue = calculateVehicleValue(.08, vehicleAge);
+            vehicleValue = calculateVehicleValue(.08);
         } else {
             vehicleValue = 1000;
         }
 
-        if(
-                this.odometer > 100_000 &&
-                !makeModel.toLowerCase().contains("honda") &&
-                !makeModel.toLowerCase().contains("toyota")
-        ){
-            vehicleValue = vehicleValue * .75;
+        boolean isNotHonda = !makeModel.toLowerCase().contains("honda");
+        boolean isNotToyota = !makeModel.toLowerCase().contains("toyota");
+
+        if( this.odometer > 100_000 && isNotHonda && isNotToyota){
+            vehicleValue *= .75;
         }
 
         return vehicleValue;
     }
 
-    public double calculateVehicleValue(double reducedValue, int vehicleAge){
-        double depreciation = (1 - (vehicleAge * reducedValue));
-        return depreciation * super.getOriginalCost();
+    public int getVehicleAge(){
+        return Year.now().getValue() - this.year;
+    }
+
+    public double calculateVehicleValue(double reducedValue){
+        int vehicleAge = getVehicleAge();
+        double depreciationRate = vehicleAge * reducedValue;
+        return super.getOriginalCost() * (1-depreciationRate);
     }
 
 
