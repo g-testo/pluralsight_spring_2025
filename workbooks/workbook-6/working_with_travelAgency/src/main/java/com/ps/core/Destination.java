@@ -3,17 +3,17 @@ package com.ps.core;
 import java.util.Arrays;
 import java.util.List;
 
-public class Destination {
+public class Destination implements Product{
     private String cityName;
-    private int chosenPriceTier;
+    private int designatedPriceTier;
 
-    private final List<Integer> dailyPrices = Arrays.asList(200,300,500);
+    private final List<Integer> prices = Arrays.asList(200,300,500);
 
     public Destination() {}
 
-    public Destination(String cityName, int chosenPriceTier) {
+    public Destination(String cityName, int designatedPriceTier) {
         this.cityName = cityName;
-        this.chosenPriceTier = chosenPriceTier;
+        this.designatedPriceTier = designatedPriceTier;
     }
 
     public String getCityName() {
@@ -24,19 +24,17 @@ public class Destination {
         this.cityName = cityName;
     }
 
-    public int getChosenPriceTier() {
-        return chosenPriceTier;
+    public int getDesignatedPriceTier() {
+        return designatedPriceTier;
     }
 
-    public void setChosenPriceTier(int chosenPriceTier) {
-        this.chosenPriceTier = chosenPriceTier;
+    public void setDesignatedPriceTier(int designatedPriceTier) {
+        this.designatedPriceTier = designatedPriceTier;
     }
 
-    @Override
-    public String toString() {
-        return "Destination{" +
-                "cityName='" + cityName + '\'' +
-                ", chosenPriceTier=" + chosenPriceTier +
-                '}';
+    public double calcPrice(){
+        int index = this.designatedPriceTier - 1;
+        return prices.get(index);
     }
+
 }
