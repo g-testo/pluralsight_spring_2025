@@ -1,4 +1,35 @@
 package com.ps.core;
 
-public class Hotel {
+import java.util.Arrays;
+import java.util.List;
+
+public class Hotel extends AddOn{
+    private List<Integer> prices = Arrays.asList(150,200,250);
+    private int chosenPriceTier;
+
+    public Hotel(int chosenPriceTier) {
+        this.chosenPriceTier = chosenPriceTier;
+    }
+
+    public int getChosenPriceTier() {
+        return chosenPriceTier;
+    }
+
+    public void setChosenPriceTier(int chosenPriceTier) {
+        this.chosenPriceTier = chosenPriceTier;
+    }
+
+    @Override
+    public double calcPrice() {
+        int index = chosenPriceTier - 1;
+        return prices.get(index);
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "prices=" + prices +
+                ", chosenPriceTier=" + chosenPriceTier +
+                '}';
+    }
 }
