@@ -1,18 +1,21 @@
 package com.ps;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> students = new ArrayList<>();
-        students.add("Orchid");
+//        List<String> students = new LinkedList<>();
 
+//        students.add("Orchid");
+//
+//
+//        List<String> studentsVector = new Vector<>();
+//
+//        studentsVector.add("Orchid");
 
-        List<String> studentsVector = new Vector<>();
+//        Room room = new Room();
 
-        studentsVector.add("Orchid");
+        
     }
+
 }

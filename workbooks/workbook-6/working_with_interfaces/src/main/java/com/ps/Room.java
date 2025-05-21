@@ -4,6 +4,8 @@ public class Room implements Cleanable, Reservable{
     private boolean isClean;
     private boolean isReserved;
 
+    public Room() {}
+
     public Room(boolean isClean, boolean isReserved) {
         this.isClean = isClean;
         this.isReserved = isReserved;
