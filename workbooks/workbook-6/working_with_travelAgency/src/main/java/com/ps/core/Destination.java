@@ -37,4 +37,10 @@ public class Destination implements Product{
         return prices.get(index);
     }
 
+    @Override
+    public String toString() {
+        return "Destination{" +
+                "cityName='" + cityName + '\'' +
+        '}';
+    }
 }

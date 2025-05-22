@@ -14,25 +14,22 @@ public class UserInterface {
     private static TravelAgency travelAgency;
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void init(){
-        // TODO: Create travel agency
-        // travelAgency = new TravelAgency("Allons-y");
+    public static void init() {
+        travelAgency = new TravelAgency("Allons-y", "123 Let's go blvd, Manhattan, NYC", "212-212-1122");
         display();
     }
 
-    public static void display(){
-        // TODO: Add main menu loop
-
+    public static void display() {
         int mainMenuCommand;
 
-        do{
+        do {
             System.out.println("--------Welcome to Allons-y Travel Agency!--------");
             System.out.println("1) Create trip");
             System.out.println("0) Exit");
             System.out.print("Command: ");
             mainMenuCommand = scanner.nextInt();
 
-            switch(mainMenuCommand){
+            switch (mainMenuCommand) {
                 case 1:
                     displayTripMenu();
                     break;
@@ -43,7 +40,7 @@ public class UserInterface {
                     System.out.println("Invalid command, try again");
             }
 
-        } while(mainMenuCommand != 0);
+        } while (mainMenuCommand != 0);
     }
 
     private static void displayTripMenu() {
@@ -79,31 +76,50 @@ public class UserInterface {
         String endDate = scanner.nextLine();
 
         // Destinations
-        // TODO: Ask user for destinations
         List<Destination> chosenDestinations = new ArrayList<>();
         int destinationMenuInput;
-        do{
+        do {
             System.out.println("--------Choose your destinations--------");
-//            List<Destination> allDestinations = travelAgency.getOfferedDestinations();
-            // 1) Mexico City
-            // 2) San Jose
-            // 3) NYC
-//            System.out.println("0) Exit");
-            System.out.print("Choice: ");
+            List<Destination> allDestinations = travelAgency.getOfferedDestinations();
+            for (int i = 0; i < allDestinations.size(); i++) {
+                Destination currentDestination = allDestinations.get(i);
+                System.out.printf("%d) %16s \t\t- $%.2f\n", i + 1, currentDestination.getCityName(), currentDestination.calcPrice());
+            }
+            System.out.println("0) Done");
+            System.out.print("Destination Choice: ");
             destinationMenuInput = scanner.nextInt();
-//            chosenDestinations.add();
-        } while(destinationMenuInput != 0);
+            if(destinationMenuInput != 0) {
+                Destination chosenDestination = allDestinations.get(destinationMenuInput - 1);
+                chosenDestinations.add(chosenDestination);
+            }
+        } while (destinationMenuInput != 0);
 
         // Activities
         List<String> chosenActivities = new ArrayList<>();
-        // TODO: Ask user for activities
+        int activityMenuInput;
+        do {
+            System.out.println("--------Choose your activities--------");
+            List<String> allActivities = travelAgency.getOfferedActivities();
+            for (int i = 0; i < allActivities.size(); i++) {
+                String currentActivity = allActivities.get(i);
+                System.out.printf("%d) %s", i + 1, currentActivity);
+            }
+            System.out.println("0) Done");
+            System.out.print("Activity Choice: ");
+            activityMenuInput = scanner.nextInt();
+            if(activityMenuInput != 0) {
+                String chosenActivity = allActivities.get(activityMenuInput - 1);
+                chosenActivities.add(chosenActivity);
+            }
+        } while (activityMenuInput != 0);
+
 
         // AddOns
         List<AddOn> chosenAddOns = new ArrayList<>();
         // TODO: Ask user for add ons
-            // Hotel
-                // Insurance
-                // Transportation
+        // Hotel
+        // Insurance
+        // Transportation
 
 
         handleCheckout();

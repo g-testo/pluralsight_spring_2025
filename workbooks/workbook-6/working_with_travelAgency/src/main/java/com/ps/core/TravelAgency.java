@@ -15,7 +15,7 @@ public class TravelAgency {
             new Destination("Singapore", 3),
             new Destination("Roma", 2),
             new Destination("Rio De Janeiro", 2),
-            new Destination("Japan", 2),
+            new Destination("Tokyo", 2),
             new Destination("Orlando", 1)
     );
 
