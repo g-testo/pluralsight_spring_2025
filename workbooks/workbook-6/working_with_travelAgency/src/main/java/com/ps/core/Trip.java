@@ -1,8 +1,16 @@
 package com.ps.core;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Formatter;
 import java.util.List;
+import java.util.regex.Pattern;
 
-public class Trip implements Product{
+public class Trip implements Product {
     private String customerName;
     private String customerPhone;
     private String customerAddress;
@@ -15,7 +23,8 @@ public class Trip implements Product{
     private List<String> activities;
     private List<AddOn> addOns;
 
-    public Trip() {}
+    public Trip() {
+    }
 
     public Trip(String customerName, String customerPhone, String customerAddress, String dateReserved, String startDate, String endDate, int additionalTravelers, List<Destination> destinations, List<String> activities, List<AddOn> addOns) {
         this.customerName = customerName;
@@ -30,16 +39,50 @@ public class Trip implements Product{
         this.addOns = addOns;
     }
 
-    public double calcPrice(){
-        return 0;
+    public double calcPrice() {
+        List<Product> products = new ArrayList<>();
+        // Daily Destinations pricing
+        // destinations = Rio(300), toyko(300)
+
+        products.addAll(destinations);
+
+        // Add Ons Pricing
+        // Addons = hotel(150), transportation(50)
+
+        products.addAll(addOns);
+
+        double totalDailyPrice = 0;
+        for (Product product : products) {
+            totalDailyPrice += product.calcPrice();
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+        // Start date = 05/25/25
+        LocalDate startDate = LocalDate.parse(this.startDate, formatter);
+
+        // End date = 05/30/25
+        LocalDate endDate = LocalDate.parse(this.endDate, formatter);
+
+        long numberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+        // number of days: 5
+
+
+        // Travellers = 10
+        int allTravelers = additionalTravelers + 1;
+
+        // 1 + additionalTravelers times * daily rate per person pricing * number of days
+        // 1 + 10 * (600 + 150 + 50) * 5
+        // 11 * (800) * 5
+
+        return allTravelers * totalDailyPrice * numberOfDays;
     }
 
-    public void generateItinerary(){
+    public void generateItinerary() {
 
     }
 
-    public void generateReceipt(){
-
+    public String generateReceipt() {
+        return "";
     }
 
 

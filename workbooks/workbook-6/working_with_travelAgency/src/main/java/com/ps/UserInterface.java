@@ -148,7 +148,7 @@ public class UserInterface {
                     System.out.println("Incorrect command, try again");
             }
 
-        } while (destinationMenuInput != 0);
+        } while (addOnMenuInput != 0);
 
         Trip trip = new Trip(customerName, customPhone, customerAddress, reservationDate, startDate, endDate, numOfTravelers, chosenDestinations, chosenActivities, chosenAddOns);
         handleCheckout(trip);
