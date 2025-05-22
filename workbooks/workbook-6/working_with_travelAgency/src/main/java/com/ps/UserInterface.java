@@ -151,14 +151,14 @@ public class UserInterface {
         } while (destinationMenuInput != 0);
 
         Trip trip = new Trip(customerName, customPhone, customerAddress, reservationDate, startDate, endDate, numOfTravelers, chosenDestinations, chosenActivities, chosenAddOns);
-
         handleCheckout(trip);
     }
 
     private static void handleCheckout(Trip trip) {
-        System.out.println(trip);
-        // Print trip details
-
+        System.out.println("Checking out");
+        travelAgency.addReservation(trip);
         // Write receipt to a file
+        FileManager.writeReceipt(travelAgency, trip);
+        System.out.println("Receipt successfully printed");
     }
 }
