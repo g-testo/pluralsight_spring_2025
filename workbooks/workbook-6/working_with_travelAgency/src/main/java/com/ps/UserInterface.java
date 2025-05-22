@@ -1,9 +1,6 @@
 package com.ps;
 
-import com.ps.core.AddOn;
-import com.ps.core.Destination;
-import com.ps.core.TravelAgency;
-import com.ps.core.Trip;
+import com.ps.core.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,17 +46,17 @@ public class UserInterface {
 
         // name
         System.out.print("Please enter your name: ");
-        String name = scanner.nextLine();
+        String customerName = scanner.nextLine();
 
         // address
         System.out.print("Please enter your address: ");
-        String address = scanner.nextLine();
+        String customerAddress = scanner.nextLine();
 
         // phone
         System.out.print("Please enter your phone number: ");
-        String phone = scanner.nextLine();
+        String customPhone = scanner.nextLine();
 
-        // how many travellers
+        // how many travelers
         System.out.print("Additional travelers: ");
         int numOfTravelers = scanner.nextInt();
 
@@ -88,7 +85,7 @@ public class UserInterface {
             System.out.println("0) Done");
             System.out.print("Destination Choice: ");
             destinationMenuInput = scanner.nextInt();
-            if(destinationMenuInput != 0) {
+            if (destinationMenuInput != 0) {
                 Destination chosenDestination = allDestinations.get(destinationMenuInput - 1);
                 chosenDestinations.add(chosenDestination);
             }
@@ -102,12 +99,12 @@ public class UserInterface {
             List<String> allActivities = travelAgency.getOfferedActivities();
             for (int i = 0; i < allActivities.size(); i++) {
                 String currentActivity = allActivities.get(i);
-                System.out.printf("%d) %s", i + 1, currentActivity);
+                System.out.printf("%d) %s\n", i + 1, currentActivity);
             }
             System.out.println("0) Done");
             System.out.print("Activity Choice: ");
             activityMenuInput = scanner.nextInt();
-            if(activityMenuInput != 0) {
+            if (activityMenuInput != 0) {
                 String chosenActivity = allActivities.get(activityMenuInput - 1);
                 chosenActivities.add(chosenActivity);
             }
@@ -116,21 +113,50 @@ public class UserInterface {
 
         // AddOns
         List<AddOn> chosenAddOns = new ArrayList<>();
-        // TODO: Ask user for add ons
-        // Hotel
-        // Insurance
-        // Transportation
+        int addOnMenuInput;
+        do {
+            System.out.println("--------Choose your add ons--------");
 
+            System.out.println("1) Add Premium Hotel");
+            System.out.println("2) Add Transportation");
+            System.out.println("3) Add Insurance");
+            System.out.println("0) Done");
 
-        handleCheckout();
+            System.out.print("Add On Choice: ");
+            addOnMenuInput = scanner.nextInt();
 
-        // TODO add details to trip
-        Trip trip = new Trip();
+            switch (addOnMenuInput) {
+                case 1:
+                    System.out.println("You don't want the haunted one, do you? \nChoose a better hotel: ");
 
-        // Checkout
+                    List<Integer> prices = Hotel.getPrices();
+                    for (int i = 0; i < prices.size(); i++) {
+                        System.out.printf("%d) $%d\n", i + 1, prices.get(i));
+                    }
+                    System.out.print("Add on choice: ");
+                    int hotelPriceChoice = scanner.nextInt();
+
+                    chosenAddOns.add(new Hotel(hotelPriceChoice));
+                    break;
+                case 2:
+                    chosenAddOns.add(new Transportation());
+                    break;
+                case 3:
+                    chosenAddOns.add(new Insurance());
+                    break;
+                default:
+                    System.out.println("Incorrect command, try again");
+            }
+
+        } while (destinationMenuInput != 0);
+
+        Trip trip = new Trip(customerName, customPhone, customerAddress, reservationDate, startDate, endDate, numOfTravelers, chosenDestinations, chosenActivities, chosenAddOns);
+
+        handleCheckout(trip);
     }
 
-    private static void handleCheckout() {
+    private static void handleCheckout(Trip trip) {
+        System.out.println(trip);
         // Print trip details
 
         // Write receipt to a file

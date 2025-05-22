@@ -22,7 +22,9 @@ public class TravelAgency {
     private List<String> offeredActivities = Arrays.asList(
             "Jet Skiing",
             "Hiking",
-            "Snorkeling"
+            "Snorkeling",
+            "Sky diving",
+            "Sightseeing"
     );
 
     List<Trip> reservations = new ArrayList<>();
