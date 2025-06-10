@@ -2,52 +2,32 @@ package com.ps;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import javax.sql.DataSource;
+import java.util.List;
 
 public class Main {
-    private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Add your dependencies to the POM (2!!!) Mysql driver(Core) and dbcp(Data sources)
-        // Config runner(Current File) for application with database username and password
 
-        // Added db login validation
         if(args.length < 2){
-            System.out.println("Username and password are required to run. Exiting...");
+            System.out.println("Username and/or password is missing");
             System.exit(1);
         }
-        String dbUsername = args[0];
-        String dbPassword = args[1];
-        System.out.print("Please enter a name to search: ");
-        String nameToSearch = scanner.nextLine();
-        // Created and setup the connection to our database
-        BasicDataSource dataSource = new BasicDataSource();
 
-        dataSource.setUrl("jdbc:mysql://localhost:3306/world");
-        dataSource.setUsername(dbUsername);
-        dataSource.setPassword(dbPassword);
+        String username = args[0];
+        String password = args[1];
 
-        // Try with resources
-        String query = "SELECT name FROM country WHERE name LIKE ?;";
-        try(
-                Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setString(1, "%" + nameToSearch + "%");
-            try(
-                    ResultSet resultSet = preparedStatement.executeQuery();
-            ){
-                while(resultSet.next()){
-                    String name = resultSet.getString("name");
-                    System.out.println(name);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        BasicDataSource basicDataSource = new BasicDataSource();
+
+        basicDataSource.setUrl("jdbc:mysql://localhost:3306/world");
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
+
+        WorldDataManager worldDataManager = new WorldDataManager(basicDataSource);
+
+        List<Country> allCounties = worldDataManager.getAllCountries();
+
+        allCounties.forEach(System.out::println);
+
     }
 }

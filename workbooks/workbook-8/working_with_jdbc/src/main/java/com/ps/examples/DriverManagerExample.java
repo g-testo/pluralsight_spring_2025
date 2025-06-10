@@ -1,4 +1,4 @@
-package com.ps;
+package com.ps.examples;
 
 import java.sql.*;
 import java.util.Scanner;
