@@ -6,11 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-public class Main {
-    private final static Scanner scanner = new Scanner(System.in);
-
+public class BasicDatasourceExample {
     public static void main(String[] args) {
         // Add your dependencies to the POM (2!!!) Mysql driver(Core) and dbcp(Data sources)
         // Config runner(Current File) for application with database username and password
@@ -22,8 +19,7 @@ public class Main {
         }
         String dbUsername = args[0];
         String dbPassword = args[1];
-        System.out.print("Please enter a name to search: ");
-        String nameToSearch = scanner.nextLine();
+
         // Created and setup the connection to our database
         BasicDataSource dataSource = new BasicDataSource();
 
@@ -32,19 +28,15 @@ public class Main {
         dataSource.setPassword(dbPassword);
 
         // Try with resources
-        String query = "SELECT name FROM country WHERE name LIKE ?;";
+        String query = "SELECT name FROM country;";
         try(
                 Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery();
         ) {
-            preparedStatement.setString(1, "%" + nameToSearch + "%");
-            try(
-                    ResultSet resultSet = preparedStatement.executeQuery();
-            ){
-                while(resultSet.next()){
-                    String name = resultSet.getString("name");
-                    System.out.println(name);
-                }
+            while(resultSet.next()){
+                String name = resultSet.getString("name");
+                System.out.println(name);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
