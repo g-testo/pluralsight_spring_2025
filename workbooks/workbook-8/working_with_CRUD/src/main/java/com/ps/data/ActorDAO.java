@@ -29,12 +29,8 @@ public class ActorDAO implements ActorDaoInt {
         ) {
             if (resultSet.next()) {
                 do {
-                    int actorId = resultSet.getInt("actor_id");
-                    String firstName = resultSet.getString("first_name");
-                    String lastName = resultSet.getString("last_name");
-
-                    Actor actor = new Actor(actorId, firstName, lastName);
-                    actors.add(actor);
+                   Actor actor = parseActor(resultSet);
+                   actors.add(actor);
                 } while (resultSet.next());
             } else {
                 System.out.println("No records found");
@@ -45,5 +41,42 @@ public class ActorDAO implements ActorDaoInt {
         }
 
         return actors;
+    }
+
+    public Actor getActorById(int actorId){
+        String query = "SELECT * FROM actor WHERE actor_id = ?;";
+
+        try(
+                Connection connection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setInt(1, actorId);
+
+            try(
+                    ResultSet resultSet = preparedStatement.executeQuery();
+            ){
+                if(resultSet.next()){
+                    return parseActor(resultSet);
+                } else {
+                    System.out.println("No actor found");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    public void createActor(Actor actor) {
+
+    }
+
+    public static Actor parseActor(ResultSet resultSet) throws SQLException {
+        int actorId = resultSet.getInt("actor_id");
+        String firstName = resultSet.getString("first_name");
+        String lastName = resultSet.getString("last_name");
+        return new Actor(actorId, firstName, lastName);
     }
 }
