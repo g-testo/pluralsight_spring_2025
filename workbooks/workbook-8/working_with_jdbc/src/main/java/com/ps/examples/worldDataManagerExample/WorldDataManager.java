@@ -1,4 +1,4 @@
-package com.ps;
+package com.ps.examples.worldDataManagerExample;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

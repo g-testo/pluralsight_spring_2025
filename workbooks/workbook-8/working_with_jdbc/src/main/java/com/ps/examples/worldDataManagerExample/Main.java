@@ -1,10 +1,11 @@
-package com.ps;
+package com.ps.examples.worldDataManagerExample;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
 
         if(args.length < 2){
@@ -17,18 +18,15 @@ public class Main {
 
         BasicDataSource basicDataSource = new BasicDataSource();
 
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/sakila");
-
+        basicDataSource.setUrl("jdbc:mysql://localhost:3306/world");
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
 
-        SakilaDataManager sakilaDataManager = new SakilaDataManager(basicDataSource);
+        WorldDataManager worldDataManager = new WorldDataManager(basicDataSource);
 
-        List<Actor> actorsDb = sakilaDataManager.searchActorsByName("me");
+        List<Country> allCounties = worldDataManager.getAllCountries();
 
-        System.out.println(actorsDb);
-
-
+        allCounties.forEach(System.out::println);
 
     }
 }

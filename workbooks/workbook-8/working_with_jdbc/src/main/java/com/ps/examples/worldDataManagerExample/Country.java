@@ -1,4 +1,4 @@
-package com.ps;
+package com.ps.examples.worldDataManagerExample;
 
 public class Country {
     private String name;
