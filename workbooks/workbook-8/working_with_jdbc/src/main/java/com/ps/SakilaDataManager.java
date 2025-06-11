@@ -33,13 +33,18 @@ public class SakilaDataManager {
             try(
                     ResultSet resultSet = preparedStatement.executeQuery();
             ){
-                while(resultSet.next()){
-                    int actorId = resultSet.getInt("actor_id");
-                    String firstName = resultSet.getString("first_name");
-                    String lastName = resultSet.getString("last_name");
 
-                    Actor actor = new Actor(actorId, firstName, lastName);
-                    actors.add(actor);
+                if(resultSet.next()){
+                    do {
+                        int actorId = resultSet.getInt("actor_id");
+                        String firstName = resultSet.getString("first_name");
+                        String lastName = resultSet.getString("last_name");
+
+                        Actor actor = new Actor(actorId, firstName, lastName);
+                        actors.add(actor);
+                    } while(resultSet.next());
+                } else {
+                    System.out.println("No records found");
                 }
             }
         } catch (SQLException e) {
@@ -52,6 +57,4 @@ public class SakilaDataManager {
     public List<Film> searchFilmsByActorId(int actorId){
         return null;
     }
-
-
 }

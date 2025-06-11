@@ -24,11 +24,9 @@ public class Main {
 
         SakilaDataManager sakilaDataManager = new SakilaDataManager(basicDataSource);
 
-        List<Actor> actorsDb = sakilaDataManager.searchActorsByName("me");
+        List<Actor> actorsDb = sakilaDataManager.searchActorsByName("kjsdhjsdfhkjfdskjhfkj");
 
         System.out.println(actorsDb);
-
-
 
     }
 }
