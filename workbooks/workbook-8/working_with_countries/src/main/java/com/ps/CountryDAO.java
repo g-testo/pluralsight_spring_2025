@@ -16,7 +16,7 @@ public class CountryDAO {
         this.dataSource = dataSource;
     }
 
-    public List<Country> getAllCountries(){
+    public List<Country> getAll(){
         List<Country> countries = new ArrayList<>();
 
         String query = "SELECT * FROM country;";
@@ -41,7 +41,7 @@ public class CountryDAO {
         return countries;
     }
 
-    public Country getCountryByCode(String countryCode){
+    public Country getByCode(String countryCode){
 
         String query = "SELECT * FROM country WHERE code = ?;";
 
@@ -66,6 +66,77 @@ public class CountryDAO {
 
         return null;
     }
+
+    public void create(Country country){
+
+        String query = "INSERT INTO country(code, name, population) VALUES (?, ?, ?);";
+
+        try(
+                Connection connection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setString(1, country.getCode());
+            preparedStatement.setString(2, country.getName());
+            preparedStatement.setLong(3, country.getPopulation());
+
+            int rows = preparedStatement.executeUpdate();
+
+            if(rows == 1){
+                System.out.println("Country successfully created");
+            } else {
+                System.out.println("Country creation failed");
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void update(String countryCode, Country country){
+        String query = "UPDATE country SET name = ?, population = ? WHERE code = ?;";
+
+        try(
+                Connection connection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setString(1, country.getName());
+            preparedStatement.setLong(2, country.getPopulation());
+            preparedStatement.setString(3, countryCode);
+
+            int rows = preparedStatement.executeUpdate();
+
+            if(rows == 1){
+                System.out.println("Country successfully updated");
+            } else {
+                System.out.println("Country update failed");
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(String countryCode){
+        String query = "DELETE FROM country WHERE code = ?;";
+
+        try(
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setString(1, countryCode);
+
+            int rows = preparedStatement.executeUpdate();
+
+            if(rows == 1){
+                System.out.println("Country successfully deleted");
+            } else {
+                System.out.println("Country deletion failed");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
     private Country countryParser(ResultSet resultSet) throws SQLException {
         String countryCode = resultSet.getString("code");

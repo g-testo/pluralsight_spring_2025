@@ -20,11 +20,30 @@ public class Main {
         CountryDAO countryDAO = new CountryDAO(basicDataSource);
 
 
-//        List<Country> countries = countryDAO.getAllCountries();
+//        List<Country> countries = countryDAO.getAll();
 //        System.out.println(countries);
 
 
-        Country country = countryDAO.getCountryByCode("AZE");
-        System.out.println(country);
+//        Country country = countryDAO.getByCode("UME");
+//        System.out.println(country);
+
+//        Country country = new Country("UME", "Ummetopia", 1);
+//        countryDAO.create(country);
+
+//        Country country = new Country("", "Ummetopia", 22);
+//        countryDAO.update("UME", country);
+
+//        countryDAO.delete("GRG");
+
+
     }
 }
+
+
+
+
+
+
+
+
+
