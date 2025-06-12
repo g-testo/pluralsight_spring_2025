@@ -2,6 +2,7 @@ package com.ps;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class Main {
@@ -16,10 +17,14 @@ public class Main {
         basicDataSource.setUrl("jdbc:mysql://localhost:3306/world");
         basicDataSource.setUsername(args[0]);
         basicDataSource.setPassword(args[1]);
-
         CountryDAO countryDAO = new CountryDAO(basicDataSource);
-        List<Country> countries = countryDAO.getAllCountries();
 
-        System.out.println(countries);
+
+//        List<Country> countries = countryDAO.getAllCountries();
+//        System.out.println(countries);
+
+
+        Country country = countryDAO.getCountryByCode("AZE");
+        System.out.println(country);
     }
 }

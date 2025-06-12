@@ -41,6 +41,32 @@ public class CountryDAO {
         return countries;
     }
 
+    public Country getCountryByCode(String countryCode){
+
+        String query = "SELECT * FROM country WHERE code = ?;";
+
+        try(
+                Connection connection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setString(1, countryCode);
+
+            try(
+                ResultSet resultSet = preparedStatement.executeQuery();
+            ){
+                if(resultSet.next()){
+                   return countryParser(resultSet);
+                } else {
+                    System.out.println("No country found");
+                }
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     private Country countryParser(ResultSet resultSet) throws SQLException {
         String countryCode = resultSet.getString("code");
         String name = resultSet.getString("name");
