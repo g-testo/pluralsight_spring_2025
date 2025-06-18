@@ -16,11 +16,10 @@ public class WorkingWithProductApplication {
 		// Create the config file to gain access to the data source
 
 		// Creating our product controller file
-		// Add a single endpoint GET /products in the controller file
-
 		// Create a DAO for product interface/implementation
-		// Add the getAll method the DAO
 
+		// Add a single endpoint GET /products in the controller file
+		// Add the getAll method the DAO
 		// Test it/See all products from northwind
 
 		// Add the rest of the CRUD endpoints
