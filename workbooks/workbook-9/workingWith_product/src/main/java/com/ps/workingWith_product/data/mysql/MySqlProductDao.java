@@ -22,7 +22,6 @@ public class MySqlProductDao implements ProductDao {
         this.dataSource = dataSource;
     }
 
-
     public List<Product> getAll(){
         // Set an empty an array
         List<Product> products = new ArrayList<>();
@@ -55,6 +54,43 @@ public class MySqlProductDao implements ProductDao {
         // Return the array
         return products;
     }
+
+    public Product getById(int id){
+        // Query
+        String query = "SELECT * FROM products WHERE ProductId=?;";
+
+        try(
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setInt(1, id);
+            try(
+                ResultSet resultSet = preparedStatement.executeQuery();
+            ){
+                if(resultSet.next()){
+                    return parseProduct(resultSet);
+                } else {
+                    System.out.println("No product found with that id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Product create(Product product){
+        // query
+        String query = "INSERT INTO products(ProductName, UnitPrice) VALUES (?,?)";
+
+        try(
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        )
+    }
+
 
     public Product parseProduct(ResultSet resultSet) throws SQLException {
         int productId = resultSet.getInt("ProductId");
