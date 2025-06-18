@@ -114,6 +114,44 @@ public class MySqlProductDao implements ProductDao {
         return null;
     }
 
+    public void update(int id, Product product){
+        // Query
+        String query = "UPDATE products SET ProductName = ?, UnitPrice = ? WHERE ProductId = ?;";
+
+        // Try Catch
+        try(
+            // Connection
+            Connection connection = dataSource.getConnection();
+            // PreparedStatement
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setDouble(2, product.getUnitPrice());
+            preparedStatement.setInt(3, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(int id){
+        // Query
+        String query = "DELETE FROM products WHERE ProductId = ?;";
+        // Try Catch
+        try(
+            // Connection
+            Connection connection = dataSource.getConnection();
+            // PreparedStatement
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
     public Product parseProduct(ResultSet resultSet) throws SQLException {
         int productId = resultSet.getInt("ProductId");
