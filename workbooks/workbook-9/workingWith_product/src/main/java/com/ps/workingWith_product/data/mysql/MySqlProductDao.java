@@ -86,9 +86,32 @@ public class MySqlProductDao implements ProductDao {
 
         try(
             Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+        ){
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setDouble(2, product.getUnitPrice());
 
-        )
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Was a product was created?
+            if(rowsAffected > 0){
+                // Retrieve the primary keys that were created...
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+                // Is there a product ID?
+                if(resultSet.next()){
+                    // Get the primary key of the new product
+                    int generatedProductId = resultSet.getInt(1);
+                    return getById(generatedProductId);
+                }
+            } else {
+                System.out.println("No product created...");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 
