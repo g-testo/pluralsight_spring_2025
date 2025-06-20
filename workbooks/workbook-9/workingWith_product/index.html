@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Horrible practice! Don't use interior tags -->
+    <style>
+
+    </style>
+
+    <h1>Hello Products!</h1>
+    <div id="products"></div>
+
+    <!-- GET http://localhost:8080/products -->
+
+
+    <script>
+        const productsEl = document.getElementById("products");
+
+        fetch("http://localhost:8080/products")
+            .then((res)=>res.json())
+            .then((data)=>{
+                for(let product of data){
+                    const el = document.createElement("div");
+                    el.innerHTML = product.productName;
+                    productsEl.appendChild(el);
+                }
+            });
+
+    </script>
+</body>
+</html>
