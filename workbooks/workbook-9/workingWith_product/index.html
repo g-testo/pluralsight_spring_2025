@@ -1,35 +1,205 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            color: #222;
+            padding: 2rem;
+            margin: 0;
+        }
+
+        h1 {
+            color: #111;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        form input, form button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+        }
+
+        form input {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        form button {
+            background-color: green;
+            color: white;
+            cursor: pointer;
+        }
+
+        #products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: black;
+        }
+
+        .product-price {
+            color: green;
+        }
+
+        .actions {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .actions button {
+            border: none;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: pink;
+            color: black;
+        }
+
+        .delete-btn {
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <!-- Horrible practice! Don't use interior tags -->
-    <style>
 
-    </style>
+<h1>🌸 Product Manager</h1>
 
-    <h1>Hello Products!</h1>
-    <div id="products"></div>
+<form id="productForm">
+    <input type="text" id="productName" placeholder="Product Name" required />
+    <input type="number" id="unitPrice" placeholder="Unit Price" required />
+    <button type="submit">Add Product</button>
+</form>
 
-    <!-- GET http://localhost:8080/products -->
+<div id="products"></div>
 
+<script>
+    const API_URL = 'http://localhost:8080/products';
+    const productsEl = document.getElementById("products");
+    const form = document.getElementById("productForm");
+    const nameInput = document.getElementById("productName");
+    const priceInput = document.getElementById("unitPrice");
 
-    <script>
-        const productsEl = document.getElementById("products");
+    let editingProductId = null;
 
-        fetch("http://localhost:8080/products")
-            .then((res)=>res.json())
-            .then((data)=>{
-                for(let product of data){
-                    const el = document.createElement("div");
-                    el.innerHTML = product.productName;
-                    productsEl.appendChild(el);
-                }
+    const fetchProducts = async () => {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        renderProducts(data);
+    };
+
+    const renderProducts = (products) => {
+        productsEl.innerHTML = '';
+        products.forEach(product => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.innerHTML = `
+                <img src="https://picsum.photos/200?random=${product.productId}" alt="Product image">
+                <div class="product-name">${product.productName}</div>
+                <div class="product-price">$${product.unitPrice.toFixed(2)}</div>
+                <div class="actions">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            `;
+            card.querySelector(".edit-btn").onclick = () => startEdit(product);
+            card.querySelector(".delete-btn").onclick = () => deleteProduct(product.productId);
+            productsEl.appendChild(card);
+        });
+    };
+
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        const name = nameInput.value.trim();
+        const price = parseFloat(priceInput.value);
+        if (!name || isNaN(price)) return;
+
+        const payload = {
+            productName: name,
+            unitPrice: price
+        };
+
+        if (editingProductId) {
+            await fetch(`${API_URL}/${editingProductId}`, { // http://localhost:8080/1
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ productId: editingProductId, ...payload })
             });
+            editingProductId = null;
+        } else {
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+        }
 
-    </script>
+        form.reset();
+        fetchProducts();
+    };
+
+    const startEdit = (product) => {
+        editingProductId = product.productId;
+        nameInput.value = product.productName;
+        priceInput.value = product.unitPrice;
+        nameInput.focus();
+    };
+
+    const deleteProduct = async (id) => {
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchProducts();
+    };
+
+    // Initial load
+    fetchProducts();
+</script>
 </body>
 </html>
